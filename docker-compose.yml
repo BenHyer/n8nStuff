@@ -2,6 +2,7 @@
 services:
   n8n:
     image: n8nio/n8n
+    container_name: n8n-master
     restart: always
     ports:
       - "5678:5678"
@@ -9,8 +10,7 @@ services:
       # This is the URL used by n8n to connect to itself for webhooks
       WEBHOOK_URL: http://localhost:5678/
     volumes:
-      # Mounts a local volume to the container path for data persistence
-      - n8n_data:/home/node/.n8n
+      - .:/home/node/.n8n
 
 volumes:
   n8n_data:
