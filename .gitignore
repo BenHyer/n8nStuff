@@ -1,16 +1,16 @@
-# n8n Data & Config
-.n8n/
-binaryData/
-config
-database.sqlite
+# n8n Data & Databases
+database.sqlite*
 *.sqlite
+*.journal
+config
+storage/
+nodes/
+
+# Logs and temp files
+*.log
+n8nEventLog*
 package-lock.json
 
-# Backups and Logs
-backup/
-*.log
-node_modules/
-
-# OS specific files
+# OS files
 .DS_Store
 Thumbs.db
