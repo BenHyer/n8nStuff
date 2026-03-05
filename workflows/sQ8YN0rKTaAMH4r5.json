@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-03-05T19:58:09.979Z",
+  "updatedAt": "2026-03-05T20:35:33.448Z",
   "createdAt": "2026-03-05T19:58:09.979Z",
   "id": "sQ8YN0rKTaAMH4r5",
-  "name": "My workflow",
+  "name": "myUnfinishedworkflow",
   "description": null,
   "active": false,
   "isArchived": false,
@@ -186,7 +186,7 @@
   "pinData": {},
   "versionId": "c0fcbbd5-05af-4dfd-bd79-272224216169",
   "activeVersionId": null,
-  "versionCounter": 1,
+  "versionCounter": 4,
   "triggerCount": 0,
   "tags": [],
   "shared": [
