@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-03-05T19:52:33.408Z",
-  "createdAt": "2026-02-27T06:43:36.430Z",
-  "id": "nRbtSgUrNARtKyfL",
-  "name": "RecipeWorkflow",
+  "updatedAt": "2026-03-05T19:59:34.482Z",
+  "createdAt": "2026-03-05T19:59:34.482Z",
+  "id": "29g4oy2SxyfmOz3m",
+  "name": "RecipeWorkflow copy",
   "description": null,
   "active": false,
   "isArchived": false,
@@ -10,7 +10,7 @@
     {
       "parameters": {
         "httpMethod": "POST",
-        "path": "0d487f2d-c394-4d13-bfa6-7f7ec0723086",
+        "path": "a42829df-f486-45a7-88b4-b22b77599071",
         "responseMode": "lastNode",
         "options": {}
       },
@@ -20,9 +20,9 @@
         -768,
         -64
       ],
-      "id": "20139288-f959-4f6a-8ff2-98c752e4b62e",
+      "id": "6299ebef-a07b-4788-a964-b8e2f89af98b",
       "name": "Webhook",
-      "webhookId": "0d487f2d-c394-4d13-bfa6-7f7ec0723086"
+      "webhookId": "a42829df-f486-45a7-88b4-b22b77599071"
     },
     {
       "parameters": {
@@ -130,7 +130,7 @@
         -512,
         -144
       ],
-      "id": "af25dcc4-1258-465d-a496-25b020f19f44",
+      "id": "51763f37-2922-4e98-9705-3743879ca618",
       "name": "Append row in sheet",
       "alwaysOutputData": false,
       "credentials": {
@@ -146,7 +146,8 @@
         "toEmail": "BenHyer333@gmail.com",
         "subject": "=New Recipe: {{ $json.body.Name }}",
         "html": "=<div style=\"font-family: Arial, sans-serif; border: 1px solid #4CAF50; padding: 20px; border-radius: 10px;\">\n  <h2 style=\"color: #2E7D32;\">🍳 {{ $json.body.Name }}</h2>\n  <p><i>{{ $json.body.Description }}</i></p>\n  \n  <hr>\n  <p><strong>Servings:</strong> {{ $json.body.Servings }} | <strong>Prep:</strong> {{ $json.body.PreparationTime }}m | <strong>Cook:</strong> {{ $json.body.CookingTime }}m</p>\n  \n  <h3 style=\"color: #2E7D32;\">Ingredients</h3>\n  <ul>\n    {{ $json.body.Ingredients.map(i => '<li>' + i.trim() + '</li>').join('') }}\n  </ul>\n\n  <h3 style=\"color: #2E7D32;\">Instructions</h3>\n  <ol>\n    {{ $json.body.Instructions.map(i => '<li>' + i.trim() + '</li>').join('') }}\n  </ol>\n</div>",
-        "options": {}
+        "options": {},
+        "path": "d1658ecd-ee6f-4dbb-819d-acb69722bbe1"
       },
       "type": "n8n-nodes-base.emailSend",
       "typeVersion": 2.1,
@@ -154,9 +155,9 @@
         -512,
         32
       ],
-      "id": "6e662ad5-228c-428a-b23f-dcc40922b5f7",
+      "id": "58489ceb-4cf6-4321-93f0-5c31430e7922",
       "name": "Send an Email",
-      "webhookId": "5bcc8099-6029-41e6-a5e7-1bc7c344970d",
+      "webhookId": "d1658ecd-ee6f-4dbb-819d-acb69722bbe1",
       "credentials": {
         "smtp": {
           "id": "CxuZupNrVB9F9jIH",
@@ -175,7 +176,7 @@
         -272,
         32
       ],
-      "id": "902793f4-ba78-4c1b-b092-78a904436fe1",
+      "id": "71cc890f-3107-4047-89b7-58f30ee931f7",
       "name": "Code in JavaScript"
     }
   ],
@@ -218,17 +219,17 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "13672120-5fcc-47ad-aa50-e1f3bd195816",
+  "versionId": "de9819da-b094-47c7-9482-8d782deef6b9",
   "activeVersionId": null,
-  "versionCounter": 93,
+  "versionCounter": 1,
   "triggerCount": 0,
   "tags": [],
   "shared": [
     {
-      "updatedAt": "2026-02-27T06:43:36.433Z",
-      "createdAt": "2026-02-27T06:43:36.433Z",
+      "updatedAt": "2026-03-05T19:59:34.485Z",
+      "createdAt": "2026-03-05T19:59:34.485Z",
       "role": "workflow:owner",
-      "workflowId": "nRbtSgUrNARtKyfL",
+      "workflowId": "29g4oy2SxyfmOz3m",
       "projectId": "P6ys2Fsi0z5zQ5xa",
       "project": {
         "updatedAt": "2026-02-27T06:42:35.702Z",

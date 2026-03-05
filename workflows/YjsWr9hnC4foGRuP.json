@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-02-27T21:17:49.994Z",
+  "updatedAt": "2026-02-27T21:24:57.711Z",
   "createdAt": "2026-02-27T21:17:49.994Z",
   "id": "YjsWr9hnC4foGRuP",
-  "name": "My workflow 2",
+  "name": "benflow",
   "description": null,
   "active": false,
   "isArchived": false,
@@ -30,7 +30,7 @@
   "pinData": {},
   "versionId": "cdc59f64-bf10-47ee-989a-c8d68fddce27",
   "activeVersionId": null,
-  "versionCounter": 1,
+  "versionCounter": 2,
   "triggerCount": 0,
   "tags": [],
   "shared": [
