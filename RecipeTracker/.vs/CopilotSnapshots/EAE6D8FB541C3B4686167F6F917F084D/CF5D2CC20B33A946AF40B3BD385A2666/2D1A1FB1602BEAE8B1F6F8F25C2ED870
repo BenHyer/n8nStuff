@@ -1,0 +1,57 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace RecipeTracker.PageModels
+{
+    public partial class NewRecipeViewModel : ObservableObject
+    {
+        [ObservableProperty]
+        private string name;
+
+        [ObservableProperty]
+        private string description;
+
+        [ObservableProperty]
+        private string ingredients;
+
+        [ObservableProperty]
+        private string instructions;
+
+        [ObservableProperty]
+        private string preparationTime;
+
+        [ObservableProperty]
+        private string cookingTime;
+
+        [ObservableProperty]
+        private string servings;
+
+        public NewRecipeViewModel()
+        {
+            SaveRecipeCommand = new CommunityToolkit.Mvvm.Input.AsyncRelayCommand(SaveRecipeAsync);
+        }
+
+        public CommunityToolkit.Mvvm.Input.IAsyncRelayCommand SaveRecipeCommand { get; }
+
+        private async Task SaveRecipeAsync()
+        {
+            var recipe = new Models.Recipe
+            {
+                Name = Name,
+                Description = Description,
+                Ingredients = string.IsNullOrWhiteSpace(Ingredients) ? new List<string>() : new List<string>(Ingredients.Split(',')),
+                Instructions = string.IsNullOrWhiteSpace(Instructions) ? new List<string>() : new List<string>(Instructions.Split(',')),
+                PreparationTime = int.TryParse(PreparationTime, out var prep) ? prep : 0,
+                CookingTime = int.TryParse(CookingTime, out var cook) ? cook : 0,
+                Servings = int.TryParse(Servings, out var serv) ? serv : 0
+            };
+
+            var json = System.Text.Json.JsonSerializer.Serialize(recipe);
+            var fileName = $"recipe_{DateTime.Now:yyyyMMddHHmmss}.json";
+            var filePath = System.IO.Path.Combine(FileSystem.AppDataDirectory, fileName);
+            await System.IO.File.WriteAllTextAsync(filePath, json);
+        }
+    }
+}

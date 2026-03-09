@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RecipeTracker.Pages.NewRecipe"
+             Title="NewRecipe">
+    <VerticalStackLayout>
+        <Label Text="Name" />
+        <Entry Text="{Binding Name}" />
+
+        <Label Text="Description" />
+        <Entry Text="{Binding Description}" />
+
+        <Label Text="Ingredients (comma separated)" />
+        <Entry Text="{Binding Ingredients}" />
+
+        <Label Text="Instructions (comma separated)" />
+        <Entry Text="{Binding Instructions}" />
+
+        <Label Text="Preparation Time (minutes)" />
+        <Entry Text="{Binding PreparationTime}" Keyboard="Numeric" />
+
+        <Label Text="Cooking Time (minutes)" />
+        <Entry Text="{Binding CookingTime}" Keyboard="Numeric" />
+
+        <Label Text="Servings" />
+        <Entry Text="{Binding Servings}" Keyboard="Numeric" />
+    </VerticalStackLayout>
+</ContentPage>

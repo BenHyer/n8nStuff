@@ -1,0 +1,34 @@
+﻿using System.Text;
+using System.Text.Json;
+
+public class N8nService
+{
+    private readonly HttpClient _httpClient;
+    // Replace this with your actual tunnel URL from n8n
+    private const string WebhookUrl = "https://your-subdomain.hooks.n8n.cloud/webhook-test/your-id";
+
+    public N8nService()
+    {
+        _httpClient = new HttpClient();
+    }
+
+    public async Task<bool> SendDataToWorkflow(object data)
+    {
+        try
+        {
+            var json = JsonSerializer.Serialize(data);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
+
+            var response = await _httpClient.PostAsync(WebhookUrl, content);
+
+            // Returns true if n8n responds with a 200-299 status code
+            return response.IsSuccessStatusCode;
+        }
+        catch (Exception ex)
+        {
+            // Log error (e.g., no internet connection)
+            Console.WriteLine($"Connection failed: {ex.Message}");
+            return false;
+        }
+    }
+}

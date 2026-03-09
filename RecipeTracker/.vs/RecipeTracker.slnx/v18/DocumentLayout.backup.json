@@ -1,0 +1,185 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|c:\\users\\benhy\\college\\spring 2026\\mobile and cloud app development\\recipestuff\\recipetracker\\recipetracker\\pages\\newrecipe.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|solutionrelative:recipetracker\\pages\\newrecipe.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|c:\\users\\benhy\\college\\spring 2026\\mobile and cloud app development\\recipestuff\\recipetracker\\recipetracker\\pagemodels\\newrecipeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|solutionrelative:recipetracker\\pagemodels\\newrecipeviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|c:\\users\\benhy\\college\\spring 2026\\mobile and cloud app development\\recipestuff\\recipetracker\\recipetracker\\services\\n8nservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|solutionrelative:recipetracker\\services\\n8nservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|c:\\users\\benhy\\college\\spring 2026\\mobile and cloud app development\\recipestuff\\recipetracker\\recipetracker\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|solutionrelative:recipetracker\\mauiprogram.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|c:\\users\\benhy\\college\\spring 2026\\mobile and cloud app development\\recipestuff\\recipetracker\\recipetracker\\pages\\homepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|solutionrelative:recipetracker\\pages\\homepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|c:\\users\\benhy\\college\\spring 2026\\mobile and cloud app development\\recipestuff\\recipetracker\\recipetracker\\pagemodels\\homepageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|solutionrelative:recipetracker\\pagemodels\\homepageviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|c:\\users\\benhy\\college\\spring 2026\\mobile and cloud app development\\recipestuff\\recipetracker\\recipetracker\\pages\\homepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|solutionrelative:recipetracker\\pages\\homepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|c:\\users\\benhy\\college\\spring 2026\\mobile and cloud app development\\recipestuff\\recipetracker\\recipetracker\\models\\recipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|solutionrelative:recipetracker\\models\\recipe.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|c:\\users\\benhy\\college\\spring 2026\\mobile and cloud app development\\recipestuff\\recipetracker\\recipetracker\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{1317F66E-D846-D847-1508-64A60D320EAF}|RecipeTracker\\RecipeTracker.csproj|solutionrelative:recipetracker\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 1,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedHeight": 444,
+          "SelectedChildIndex": 4,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "HomePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Pages\\HomePage.xaml.cs",
+              "RelativeDocumentMoniker": "RecipeTracker\\Pages\\HomePage.xaml.cs",
+              "ToolTip": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Pages\\HomePage.xaml.cs",
+              "RelativeToolTip": "RecipeTracker\\Pages\\HomePage.xaml.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T18:52:50.646Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "NewRecipeViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\PageModels\\NewRecipeViewModel.cs",
+              "RelativeDocumentMoniker": "RecipeTracker\\PageModels\\NewRecipeViewModel.cs",
+              "ToolTip": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\PageModels\\NewRecipeViewModel.cs",
+              "RelativeToolTip": "RecipeTracker\\PageModels\\NewRecipeViewModel.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEEAAAAQAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T18:48:16.831Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "HomePageViewModel.cs",
+              "DocumentMoniker": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\PageModels\\HomePageViewModel.cs",
+              "RelativeDocumentMoniker": "RecipeTracker\\PageModels\\HomePageViewModel.cs",
+              "ToolTip": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\PageModels\\HomePageViewModel.cs",
+              "RelativeToolTip": "RecipeTracker\\PageModels\\HomePageViewModel.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAqwBYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T18:46:48.373Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "NewRecipe.xaml",
+              "DocumentMoniker": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Pages\\NewRecipe.xaml",
+              "RelativeDocumentMoniker": "RecipeTracker\\Pages\\NewRecipe.xaml",
+              "ToolTip": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Pages\\NewRecipe.xaml",
+              "RelativeToolTip": "RecipeTracker\\Pages\\NewRecipe.xaml",
+              "ViewState": "AgIAAGAAAAAAAAAAAADgv24AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-02-27T18:47:55.074Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "N8nService.cs",
+              "DocumentMoniker": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Services\\N8nService.cs",
+              "RelativeDocumentMoniker": "RecipeTracker\\Services\\N8nService.cs",
+              "ToolTip": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Services\\N8nService.cs",
+              "RelativeToolTip": "RecipeTracker\\Services\\N8nService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T19:03:33.273Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MauiProgram.cs",
+              "DocumentMoniker": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\MauiProgram.cs",
+              "RelativeDocumentMoniker": "RecipeTracker\\MauiProgram.cs",
+              "ToolTip": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\MauiProgram.cs",
+              "RelativeToolTip": "RecipeTracker\\MauiProgram.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAhwDoAAAA4AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T18:56:20.494Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "HomePage.xaml",
+              "DocumentMoniker": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Pages\\HomePage.xaml",
+              "RelativeDocumentMoniker": "RecipeTracker\\Pages\\HomePage.xaml",
+              "ToolTip": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Pages\\HomePage.xaml",
+              "RelativeToolTip": "RecipeTracker\\Pages\\HomePage.xaml",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAnwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-02-27T18:46:13.082Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Recipe.cs",
+              "DocumentMoniker": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Models\\Recipe.cs",
+              "RelativeDocumentMoniker": "RecipeTracker\\Models\\Recipe.cs",
+              "ToolTip": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\Models\\Recipe.cs",
+              "RelativeToolTip": "RecipeTracker\\Models\\Recipe.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAgwA8AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-02-27T18:45:03.587Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "AppShell.xaml",
+              "DocumentMoniker": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\AppShell.xaml",
+              "RelativeDocumentMoniker": "RecipeTracker\\AppShell.xaml",
+              "ToolTip": "C:\\Users\\BenHy\\College\\Spring 2026\\Mobile and Cloud app Development\\RecipeStuff\\RecipeTracker\\RecipeTracker\\AppShell.xaml",
+              "RelativeToolTip": "RecipeTracker\\AppShell.xaml",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAnwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-02-27T18:53:29.675Z"
+            }
+          ]
+        },
+        {
+          "DockedHeight": 180,
+          "SelectedChildIndex": -1,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{d78612c7-9962-4b83-95d9-268046dad23a}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:1:0:{d212f56b-c48a-434c-a121-1c5d80b59b9f}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

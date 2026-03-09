@@ -1,0 +1,31 @@
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace RecipeTracker.PageModels
+{
+    public partial class NewRecipeViewModel : ObservableObject
+    {
+        [ObservableProperty]
+        private string name;
+
+        [ObservableProperty]
+        private string description;
+
+        [ObservableProperty]
+        private string ingredients;
+
+        [ObservableProperty]
+        private string instructions;
+
+        [ObservableProperty]
+        private string preparationTime;
+
+        [ObservableProperty]
+        private string cookingTime;
+
+        [ObservableProperty]
+        private string servings;
+    }
+}
