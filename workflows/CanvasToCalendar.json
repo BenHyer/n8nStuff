@@ -1,0 +1,349 @@
+{
+  "updatedAt": "2026-03-13T04:51:36.200Z",
+  "createdAt": "2026-03-13T04:51:36.200Z",
+  "id": "kTfsl62He9h1LhVf",
+  "name": "CanvasToCalendar",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\n\nreturn items.map(item => {\n  const data = item.json;\n  const assignmentName = data.name;\n  const courseId = data.course_id;\n  const dueDate = new Date(data.due_at);\n  \n  let schedule = { days: [], start: \"\" };\n  let colorId = \"1\"; // Default (Lavender)\n\n  // 1. SCHEDULES & COLOR MAPPING\n  if (courseId === 1229212 || courseId === 1210923) { \n    // Mobile & Cloud App Dev\n    schedule = { days: [1, 3, 5], start: \"10:30:00\" };\n    colorId = \"3\"; // Purple (Grape)\n  } else if (courseId === 1229214) { \n    // WebTel & Ops\n    schedule = { days: [2, 4], start: \"16:45:00\" }; \n    colorId = \"1\"; // Peacock (Lavender/Pale Blue)\n  } else if (courseId === 1229216) { \n    // Ethics & Craftsmanship\n    schedule = { days: [2, 4], start: \"18:45:00\" }; \n    colorId = \"4\"; // Flamingo\n  } else if (courseId === 1210774) { \n    // Linear Algebra\n    schedule = { days: [1, 3, 5], start: \"08:30:00\" }; \n    colorId = \"5\"; // Banana (Yellow)\n  } else if (courseId === 1211788) { \n    // Personal & Consumer Mgmt.\n    schedule = { days: [2, 4], start: \"08:30:00\" };\n    colorId = \"8\"; // Graphite\n  } else { \n    schedule = { days: [1, 2, 3, 4, 5], start: \"09:00:00\" };\n    colorId = \"1\";\n  }\n\n  // 2. LEAD TIME & TARGET DATE\n  const isProject = /project|exam|paper/i.test(assignmentName);\n  const leadDays = isProject ? 5 : 2;\n  let targetDate = new Date(dueDate);\n  targetDate.setDate(targetDate.getDate() - leadDays);\n\n  // 3. SNAP TO NEAREST CLASS DAY\n  let attempts = 0;\n  while (!schedule.days.includes(targetDate.getDay()) && attempts < 7) {\n    targetDate.setDate(targetDate.getDate() - 1);\n    attempts++;\n  }\n\n  const dateStr = targetDate.toISOString().split('T')[0];\n  \n  // 4. CALCULATE 30-MINUTE DURATION\n  const startTime = new Date(`${dateStr}T${schedule.start}`);\n  const endTime = new Date(startTime.getTime() + 30 * 60000); \n  const endClock = endTime.toTimeString().split(' ')[0];\n\n  return {\n    json: {\n      originalName: assignmentName,\n      colorId: colorId,\n      startDate: `${dateStr}T${schedule.start}-06:00`,\n      endDate: `${dateStr}T${endClock}-06:00`,\n      calendarSearchQuery: assignmentName\n    }\n  };\n});"
+      },
+      "name": "Logic & Translation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        848,
+        0
+      ],
+      "id": "576789ce-dbfd-411a-ad65-93770190f6a0"
+    },
+    {
+      "parameters": {
+        "resource": "assignment",
+        "courseId": "={{ $json.id }}",
+        "returnAll": true,
+        "filters": {
+          "bucket": "upcoming",
+          "include": []
+        }
+      },
+      "type": "n8n-nodes-canvas-lms.canvasLms",
+      "typeVersion": 1,
+      "position": [
+        592,
+        0
+      ],
+      "id": "1f50724e-1f3d-405a-a35d-2db3845e165e",
+      "name": "Get many assignments",
+      "credentials": {
+        "canvasApi": {
+          "id": "c8NXgQ2TglLdRqOt",
+          "name": "Canvas LMS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "returnAll": true,
+        "filters": {
+          "enrollment_term_id": "1048",
+          "state": [
+            "available"
+          ]
+        }
+      },
+      "type": "n8n-nodes-canvas-lms.canvasLms",
+      "typeVersion": 1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "054fa2e9-2f94-41b7-bbf7-4675f94a635a",
+      "name": "Get many courses",
+      "credentials": {
+        "canvasApi": {
+          "id": "c8NXgQ2TglLdRqOt",
+          "name": "Canvas LMS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().filter(item => {\n  const data = item.json;\n  \n  // 1. Term Check (1048)\n  const isCorrectTerm = data.enrollment_term_id === 1048;\n  \n  // 2. Active Enrollment Check\n  const isActive = data.enrollments && \n                   data.enrollments.length > 0 && \n                   data.enrollments[0].enrollment_state === 'active';\n  \n  // 3. PUBLISHED CHECK (The fix for the 403 error)\n  // This ensures we don't hit the \"Unpublished\" Cloud App Dev course\n  const isPublished = data.workflow_state === 'available';\n  \n  return isCorrectTerm && isActive && isPublished;\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        384,
+        0
+      ],
+      "id": "a35e6320-f28d-439b-8a90-1d72ee3d24aa",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "ef9d3b4670847ca46d560c02228cd4adb9e6ba7232e9539f319835e9e8795e4e@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Canvas Automation"
+        },
+        "options": {
+          "timeMin": "=2026-03-01T00:00:00Z",
+          "query": "={{ $json.calendarSearchQuery }}"
+        }
+      },
+      "name": "Check for Duplicate1",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        16
+      ],
+      "id": "7ed9b0a8-030c-4791-97ec-bf9e8973d05f",
+      "alwaysOutputData": true,
+      "executeOnce": false,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "IqtUVu43S38UGEMS",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "7fe678f7-5fcb-4870-9ab6-a58981f162bb",
+              "leftValue": "={{ $json.id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {
+          "ignoreCase": false
+        }
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.3,
+      "position": [
+        1584,
+        16
+      ],
+      "id": "eca33834-710c-4c9f-b758-f54f93776792",
+      "name": "Filter",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "b257ae30-5d47-4a62-8f9c-eaddc59c311e",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1136,
+        0
+      ],
+      "id": "acd08bdc-af2c-4dd1-b3c4-40b09e57809c",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "ef9d3b4670847ca46d560c02228cd4adb9e6ba7232e9539f319835e9e8795e4e@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Canvas Automation"
+        },
+        "start": "={{ $json.startDate }}",
+        "end": "={{ $json.endDate }}",
+        "useDefaultReminders": false,
+        "additionalFields": {
+          "allday": "no",
+          "color": "={{ $json.colorId }}",
+          "summary": "={{ $json.originalName }}"
+        }
+      },
+      "name": "Add to Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        144
+      ],
+      "id": "ffa26be7-26ff-419c-a661-f1d1342023bf",
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "IqtUVu43S38UGEMS",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Logic & Translation": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many assignments": {
+      "main": [
+        [
+          {
+            "node": "Logic & Translation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many courses": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Get many assignments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check for Duplicate1": {
+      "main": [
+        [
+          {
+            "node": "Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter": {
+      "main": [
+        [
+          {
+            "node": "Add to Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many courses",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Check for Duplicate1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add to Calendar": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "abdc1675-9c14-4716-baeb-7000ac1cfc73",
+  "activeVersionId": null,
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-03-13T04:51:36.205Z",
+      "createdAt": "2026-03-13T04:51:36.205Z",
+      "role": "workflow:owner",
+      "workflowId": "kTfsl62He9h1LhVf",
+      "projectId": "P6ys2Fsi0z5zQ5xa",
+      "project": {
+        "updatedAt": "2026-02-27T06:42:35.702Z",
+        "createdAt": "2026-02-27T06:38:26.243Z",
+        "id": "P6ys2Fsi0z5zQ5xa",
+        "name": "Ben benhyer333@gmail.com <benhyer333@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "580fba81-845c-498f-b483-012edba50d69"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

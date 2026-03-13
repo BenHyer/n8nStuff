@@ -1,0 +1,215 @@
+{
+  "updatedAt": "2026-03-05T20:35:33.448Z",
+  "createdAt": "2026-03-05T19:58:09.979Z",
+  "id": "sQ8YN0rKTaAMH4r5",
+  "name": "myUnfinishedworkflow",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "0d487f2d-c394-4d13-bfa6-7f7ec0723086",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -288,
+        64
+      ],
+      "id": "68d9cc04-5103-46ca-a991-1da8ab5bfc90",
+      "name": "Webhook",
+      "webhookId": "0d487f2d-c394-4d13-bfa6-7f7ec0723086"
+    },
+    {
+      "parameters": {
+        "sendTo": "benhyer333@gmail.com",
+        "subject": "=New Recipe Added: {{ $json.Name }}",
+        "message": "=<h2 style=\"color: #2e7d32;\">{{ $json.Name }}</h2>\n<p><strong>Servings:</strong> {{ $json.Servings }}</p>\n<p><i>{{ $json.Description }}</i></p>\n\n<h3>Ingredients:</h3>\n<ul>\n  {{ $json.Ingredients.map(i => '<li>' + i + '</li>').join('') }}\n</ul>\n\n<h3>Instructions:</h3>\n<ol>\n  {{ $json.Instructions.map(i => '<li>' + i + '</li>').join('') }}\n</ol>",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        -64,
+        240
+      ],
+      "id": "c4e418f5-18fb-47ae-934b-81e718c9ed03",
+      "name": "Send a message",
+      "webhookId": "437a6ad5-84ef-4bbd-9cfc-cf46129ad42d",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "tJ2toCj4tbD7K5N2",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1r_SfK7_tKiNFFgxUFvYUOI6e82uGC6r9fn6-r77gXNw",
+          "mode": "list",
+          "cachedResultName": "Recipes",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r_SfK7_tKiNFFgxUFvYUOI6e82uGC6r9fn6-r77gXNw/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1r_SfK7_tKiNFFgxUFvYUOI6e82uGC6r9fn6-r77gXNw/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ $json.body.Name }}",
+            "Description": "={{ $json.body.Description }}",
+            "Ingredients": "={{ $json.body.Ingredients.join(', ') }}",
+            "Instructions": "={{ $json.body.Instructions.join('\\n') }}",
+            "PreparationTime": "={{ $json.body.PreparationTime }}",
+            "CookingTime": "={{ $json.body.CookingTime }}",
+            "Servings": "={{ $json.body.Servings }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Name",
+              "displayName": "Name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Description",
+              "displayName": "Description",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Ingredients",
+              "displayName": "Ingredients",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Instructions",
+              "displayName": "Instructions",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "PreparationTime",
+              "displayName": "PreparationTime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "CookingTime",
+              "displayName": "CookingTime",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "Servings",
+              "displayName": "Servings",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        176,
+        96
+      ],
+      "id": "e3e64a86-8664-4d69-936e-857c17de73ec",
+      "name": "Append row in sheet",
+      "alwaysOutputData": false,
+      "credentials": {
+        "googleApi": {
+          "id": "pJOmei75GbEQsrj9",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "c0fcbbd5-05af-4dfd-bd79-272224216169",
+  "activeVersionId": null,
+  "versionCounter": 4,
+  "triggerCount": 0,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-03-05T19:58:09.985Z",
+      "createdAt": "2026-03-05T19:58:09.985Z",
+      "role": "workflow:owner",
+      "workflowId": "sQ8YN0rKTaAMH4r5",
+      "projectId": "P6ys2Fsi0z5zQ5xa",
+      "project": {
+        "updatedAt": "2026-02-27T06:42:35.702Z",
+        "createdAt": "2026-02-27T06:38:26.243Z",
+        "id": "P6ys2Fsi0z5zQ5xa",
+        "name": "Ben benhyer333@gmail.com <benhyer333@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "580fba81-845c-498f-b483-012edba50d69"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}
