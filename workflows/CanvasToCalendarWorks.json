@@ -1,0 +1,322 @@
+{
+  "updatedAt": "2026-03-15T04:24:01.142Z",
+  "createdAt": "2026-03-13T16:54:29.294Z",
+  "id": "ua12Wh784vZ5hzOP",
+  "name": "CanvasToCalendarWorks",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1488,
+        912
+      ],
+      "id": "4214ac01-0b76-4f85-acd3-09f5c9a290a4",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "mode": "combine",
+        "combineBy": "combineAll",
+        "options": {
+          "clashHandling": {
+            "values": {
+              "resolveClash": "preferLast"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.2,
+      "position": [
+        -672,
+        1008
+      ],
+      "id": "3f8d81f7-9d93-4b6d-911d-115076764845",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "resource": "assignment",
+        "courseId": "={{ $json.id }}",
+        "returnAll": true,
+        "filters": {
+          "bucket": "future"
+        }
+      },
+      "id": "c21d61c1-423e-427c-90cf-611619e89fb9",
+      "name": "Get many assignments",
+      "type": "n8n-nodes-canvas-lms.canvasLms",
+      "typeVersion": 1,
+      "position": [
+        -1008,
+        816
+      ],
+      "credentials": {
+        "canvasApi": {
+          "id": "c8NXgQ2TglLdRqOt",
+          "name": "Canvas LMS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "returnAll": true,
+        "filters": {
+          "enrollment_term_id": "1048",
+          "state": [
+            "available"
+          ]
+        }
+      },
+      "id": "4436e0bd-2256-4790-bc9c-d2a15db6c30d",
+      "name": "Get many courses",
+      "type": "n8n-nodes-canvas-lms.canvasLms",
+      "typeVersion": 1,
+      "position": [
+        -1296,
+        816
+      ],
+      "credentials": {
+        "canvasApi": {
+          "id": "c8NXgQ2TglLdRqOt",
+          "name": "Canvas LMS account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().filter(item => {\n  const data = item.json;\n  return data.enrollment_term_id === 1048 && data.workflow_state === 'available';\n});"
+      },
+      "id": "b0e86a48-115a-42f9-87f3-7566ec1efde2",
+      "name": "Term Filter",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1152,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "getAll",
+        "calendar": {
+          "__rl": true,
+          "value": "1aa7577be90e46461f08f11c6b4301730c4e30fee5a9f87ad7c4ef83c81e157a@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Canvas Automation"
+        },
+        "limit": 250,
+        "options": {}
+      },
+      "id": "2cabcd26-b935-4458-a334-94d2a92b3e19",
+      "name": "Fetch Current Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1.1,
+      "position": [
+        -1296,
+        1024
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "IqtUVu43S38UGEMS",
+          "name": "Google Calendar account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nreturn items.map(item => {\n  const data = item.json;\n  const assignmentName = data.name.trim();\n  const courseId = data.course_id;\n  const dueDate = new Date(data.due_at);\n  let schedule = { days: [], start: \"\" };\n  let colorId = \"1\";\n  if (courseId === 1229212 || courseId === 1210923) { schedule = { days: [1, 3, 5], start: \"10:30:00\" }; colorId = \"3\"; }\n  else if (courseId === 1229214) { schedule = { days: [2, 4], start: \"16:45:00\" }; colorId = \"1\"; }\n  else if (courseId === 1229216) { schedule = { days: [2, 4], start: \"18:45:00\" }; colorId = \"4\"; }\n  else if (courseId === 1210774) { schedule = { days: [1, 3, 5], start: \"08:30:00\" }; colorId = \"5\"; }\n  else if (courseId === 1211788) { schedule = { days: [2, 4], start: \"08:30:00\" }; colorId = \"8\"; }\n  else { schedule = { days: [1, 2, 3, 4, 5], start: \"09:00:00\" }; colorId = \"1\"; }\n  const isProject = /project|exam|paper/i.test(assignmentName);\n  const leadDays = isProject ? 5 : 2;\n  let targetDate = new Date(dueDate);\n  targetDate.setDate(targetDate.getDate() - leadDays);\n  let attempts = 0;\n  while (!schedule.days.includes(targetDate.getDay()) && attempts < 7) { targetDate.setDate(targetDate.getDate() - 1); attempts++; }\n  const dateStr = targetDate.toISOString().split('T')[0];\n  const startTime = new Date(`${dateStr}T${schedule.start}`);\n  const endTime = new Date(startTime.getTime() + 30 * 60000);\n  const endClock = endTime.toTimeString().split(' ')[0];\n  return {\n    json: {\n      originalName: assignmentName,\n      colorId: colorId,\n      startDate: `${dateStr}T${schedule.start}-06:00`,\n      endDate: `${dateStr}T${endClock}-06:00`,\n      calendarSearchQuery: assignmentName\n    }\n  };\n});"
+      },
+      "id": "8cd2dce1-64bd-4dc3-b59b-663d39daf1d8",
+      "name": "Logic & Translation",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 1,
+      "position": [
+        -832,
+        816
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// 1. Get ALL data coming from the Merge node\nconst mergedData = $input.all();\n\n// 2. Fetch the full list of calendar events directly from that node\n// Ensure the name inside the brackets matches your Calendar node name exactly\nconst calendarEvents = $('Fetch Current Calendar').all();\n\n// 3. Create a clean list of existing titles from your calendar\nconst existingTitles = new Set(\n  calendarEvents\n    .filter(e => e.json.summary)\n    .map(e => e.json.summary.trim())\n);\n\n// 4. Use a Set to keep track of assignments we've already seen in this run\nconst processedAssignments = new Set();\nconst output = [];\n\nfor (const item of mergedData) {\n  const name = (item.json.originalName || \"\").trim();\n  \n  // Skip if: \n  // - Name is empty\n  // - Name is already on the Google Calendar\n  // - We already processed this assignment in this loop\n  if (!name || existingTitles.has(name) || processedAssignments.has(name)) {\n    continue;\n  }\n\n  // If it's brand new, add it to the output and mark it as processed\n  processedAssignments.add(name);\n  output.push(item);\n}\n\nreturn output;"
+      },
+      "id": "b0007cd4-9bd6-44bc-9f13-ffff77c521f6",
+      "name": "Duplicate Filter",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -528,
+        1008
+      ]
+    },
+    {
+      "parameters": {
+        "calendar": {
+          "__rl": true,
+          "value": "1aa7577be90e46461f08f11c6b4301730c4e30fee5a9f87ad7c4ef83c81e157a@group.calendar.google.com",
+          "mode": "list",
+          "cachedResultName": "Canvas Automation"
+        },
+        "start": "={{ $json.startDate }}",
+        "end": "={{ $json.endDate }}",
+        "additionalFields": {
+          "color": "={{ $json.colorId }}",
+          "summary": "={{ $json.originalName }}"
+        }
+      },
+      "id": "bf4ca224-848c-40f9-bb5d-903a1285fc4a",
+      "name": "Add to Calendar",
+      "type": "n8n-nodes-base.googleCalendar",
+      "typeVersion": 1,
+      "position": [
+        -384,
+        1008
+      ],
+      "credentials": {
+        "googleCalendarOAuth2Api": {
+          "id": "IqtUVu43S38UGEMS",
+          "name": "Google Calendar account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get many courses",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Fetch Current Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Duplicate Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many assignments": {
+      "main": [
+        [
+          {
+            "node": "Logic & Translation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get many courses": {
+      "main": [
+        [
+          {
+            "node": "Term Filter",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Term Filter": {
+      "main": [
+        [
+          {
+            "node": "Get many assignments",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch Current Calendar": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Logic & Translation": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Duplicate Filter": {
+      "main": [
+        [
+          {
+            "node": "Add to Calendar",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "pinData": {},
+  "versionId": "bffab57a-2450-45c5-bb14-2f2915d9f7b7",
+  "activeVersionId": null,
+  "versionCounter": 94,
+  "triggerCount": 0,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-03-13T16:54:29.300Z",
+      "createdAt": "2026-03-13T16:54:29.300Z",
+      "role": "workflow:owner",
+      "workflowId": "ua12Wh784vZ5hzOP",
+      "projectId": "P6ys2Fsi0z5zQ5xa",
+      "project": {
+        "updatedAt": "2026-02-27T06:42:35.702Z",
+        "createdAt": "2026-02-27T06:38:26.243Z",
+        "id": "P6ys2Fsi0z5zQ5xa",
+        "name": "Ben benhyer333@gmail.com <benhyer333@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "580fba81-845c-498f-b483-012edba50d69"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}
