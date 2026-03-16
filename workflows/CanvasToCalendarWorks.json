@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-03-15T04:24:01.142Z",
+  "updatedAt": "2026-03-16T17:26:52.616Z",
   "createdAt": "2026-03-13T16:54:29.294Z",
   "id": "ua12Wh784vZ5hzOP",
   "name": "CanvasToCalendarWorks",
@@ -12,7 +12,7 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -1488,
+        -1520,
         912
       ],
       "id": "4214ac01-0b76-4f85-acd3-09f5c9a290a4",
@@ -25,7 +25,7 @@
         "options": {
           "clashHandling": {
             "values": {
-              "resolveClash": "preferLast"
+              "resolveClash": "preferInput1"
             }
           }
         }
@@ -33,7 +33,7 @@
       "type": "n8n-nodes-base.merge",
       "typeVersion": 3.2,
       "position": [
-        -672,
+        -576,
         1008
       ],
       "id": "3f8d81f7-9d93-4b6d-911d-115076764845",
@@ -53,7 +53,7 @@
       "type": "n8n-nodes-canvas-lms.canvasLms",
       "typeVersion": 1,
       "position": [
-        -1008,
+        -960,
         816
       ],
       "credentials": {
@@ -97,7 +97,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -1152,
+        -1136,
         816
       ]
     },
@@ -138,7 +138,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 1,
       "position": [
-        -832,
+        -768,
         816
       ]
     },
@@ -151,7 +151,7 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -528,
+        -416,
         1008
       ]
     },
@@ -175,7 +175,7 @@
       "type": "n8n-nodes-base.googleCalendar",
       "typeVersion": 1,
       "position": [
-        -384,
+        -256,
         1008
       ],
       "credentials": {
@@ -291,9 +291,9 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "bffab57a-2450-45c5-bb14-2f2915d9f7b7",
+  "versionId": "43d62a0b-97b2-4922-93ab-1f504b69d509",
   "activeVersionId": null,
-  "versionCounter": 94,
+  "versionCounter": 109,
   "triggerCount": 0,
   "tags": [],
   "shared": [
