@@ -1,0 +1,47 @@
+{
+  "updatedAt": "2026-07-02T03:22:56.676Z",
+  "createdAt": "2026-07-02T03:22:56.676Z",
+  "id": "LxZWTKXq4ljXCLip",
+  "name": "SOP to Job Plan Practice",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "940bc574-a027-4663-a300-cdb9843cb796",
+  "activeVersionId": null,
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-07-02T03:22:56.681Z",
+      "createdAt": "2026-07-02T03:22:56.681Z",
+      "role": "workflow:owner",
+      "workflowId": "LxZWTKXq4ljXCLip",
+      "projectId": "P6ys2Fsi0z5zQ5xa",
+      "project": {
+        "updatedAt": "2026-02-27T06:42:35.702Z",
+        "createdAt": "2026-02-27T06:38:26.243Z",
+        "id": "P6ys2Fsi0z5zQ5xa",
+        "name": "Ben benhyer333@gmail.com <benhyer333@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "580fba81-845c-498f-b483-012edba50d69"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}

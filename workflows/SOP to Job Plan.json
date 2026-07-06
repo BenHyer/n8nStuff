@@ -1,0 +1,47 @@
+{
+  "updatedAt": "2026-07-06T02:07:18.140Z",
+  "createdAt": "2026-07-06T02:07:18.140Z",
+  "id": "vjGuz3Tf0e8F2NPT",
+  "name": "SOP to Job Plan",
+  "description": null,
+  "active": false,
+  "isArchived": false,
+  "nodes": [],
+  "connections": {},
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "staticData": null,
+  "meta": null,
+  "pinData": {},
+  "versionId": "4b8b5df6-f1b5-4b66-a9df-656107a87dd7",
+  "activeVersionId": null,
+  "versionCounter": 1,
+  "triggerCount": 0,
+  "tags": [],
+  "shared": [
+    {
+      "updatedAt": "2026-07-06T02:07:18.146Z",
+      "createdAt": "2026-07-06T02:07:18.146Z",
+      "role": "workflow:owner",
+      "workflowId": "vjGuz3Tf0e8F2NPT",
+      "projectId": "P6ys2Fsi0z5zQ5xa",
+      "project": {
+        "updatedAt": "2026-02-27T06:42:35.702Z",
+        "createdAt": "2026-02-27T06:38:26.243Z",
+        "id": "P6ys2Fsi0z5zQ5xa",
+        "name": "Ben benhyer333@gmail.com <benhyer333@gmail.com>",
+        "type": "personal",
+        "icon": null,
+        "description": null,
+        "creatorId": "580fba81-845c-498f-b483-012edba50d69"
+      }
+    }
+  ],
+  "versionMetadata": {
+    "name": null,
+    "description": null
+  }
+}
