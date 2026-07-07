@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-07T00:16:34.307Z",
+  "updatedAt": "2026-07-07T04:50:50.763Z",
   "createdAt": "2026-07-06T02:07:18.140Z",
   "id": "vjGuz3Tf0e8F2NPT",
   "name": "SOP to Job Plan",
@@ -10,8 +10,15 @@
     {
       "parameters": {
         "promptType": "define",
-        "text": "={{ $json.text }}",
+        "text": "=Original File Name: {{ $json.name }}\n\nSOP Text Content:\n{{ $json.text }}",
         "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "You are an expert technical writer specializing in industrial maintenance and operations training. Your job is to ingest a legacy Standard Operating Procedure (SOP) and completely map its contents into a structured, comprehensive Job Plan JSON schema matching all template requirements.  CRITICAL EXTRACTION RULES: 1. Document Identifiers: - \"job_plan_filename\": Calculate using the input document name. Strip out 'SOP' or 'sop'. Keep the leading numeric prefix intact, and insert 'Job Plan' right after the number. (e.g., \"41. Sprinklers...\" becomes \"41. Job Plan Sprinklers...\") - \"job_plan_id_name\": Extract and combine the primary Activity and Site Location (e.g., \"Sprinklers - 250 East Carol Way Well\"). - Ignore legacy headers: Division, Revised by, Effective Date, and Section.  2. Approvals & Scope: - \"approved_by\": Identify the name next to \"Approved By:\". Output null if blank or missing. - \"purpose_scope\": Extract or summarize the purpose/scope of the operation from the SOP text.  3. Administrative Sections (Prep, Safety, References): - Scrutinize the SOP for pre-execution steps, system isolations, or setup steps to populate \"preparation_work\". - Extract any PPE requirements, hazards, or warnings to populate \"safety_requirements\". - Extract any external manuals or documents mentioned to populate \"references\". - If any of these sections are absent in the SOP, set them to null.  4. Maintenance Task Details (The Table Steps): - Break down dense text blocks into individual chronological actions. - Separate Phases: Automatically detect separate execution phases (e.g., \"ON Procedures / OFF Procedures\", \"Spring Start Up / Fall Shut Down\"). Insert an element at the start of that phase where \"is_section_header\" is true, and \"section_name\" holds the phase title in ALL CAPS. - Regular Steps: Set \"is_section_header\" to false. Restart the \"order\" count at 1 for each new phase. - \"task\": Create a punchy action phrase consisting of exactly 2 to 4 words. - \"description\": Write simple, linear instructions for a brand-new employee. Keep asset parameters verbatim (brands, sizes, unique tools like \"fork key\"). Retain image file name references verbatim.  5. Resources Tables (Labor, Training, Materials, Tools): - Extract any mentions of required crew sizes, trades, or estimated times into the \"labor_information\" array. - Extract specialized certifications or safety training mentioned into \"training_requirements\". - Extract required replacement parts or consumables into \"materials\". - Extract required specialized gear (e.g., \"compressor adapter\", \"fork key\") into the \"tools\" array. - If no data exists for a resources table, return an empty array []."
+            }
+          ]
+        },
         "batching": {}
       },
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
@@ -38,6 +45,9 @@
       "parameters": {
         "resource": "object",
         "operation": "get",
+        "bucketName": "SOPs",
+        "objectName": "41. Sprinklers - 250 East Carol Way Well",
+        "alt": "media",
         "getParameters": {},
         "encryptionHeaders": {},
         "requestOptions": {}
@@ -49,24 +59,18 @@
         -160
       ],
       "id": "fe9cf64a-6040-45e4-ba72-fb9a058f8f4f",
-      "name": "Get object data or metadata"
+      "name": "Get object data or metadata",
+      "credentials": {
+        "googleCloudStorageOAuth2Api": {
+          "id": "kYyVbgFJl9CiEtAX",
+          "name": "Google Cloud Storage account 2"
+        }
+      }
     },
     {
       "parameters": {
-        "operation": "text",
-        "options": {}
+        "jsonSchemaExample": "{\n  \"type\": \"object\",\n  \"properties\": {\n    \"job_plan_filename\": {\n      \"type\": \"string\",\n      \"description\": \"Calculated filename. Strip 'SOP/sop', keep the leading number, append 'Job Plan' right after the number (e.g., '41. Job Plan Sprinklers...').\"\n    },\n    \"job_plan_id_name\": {\n      \"type\": \"string\",\n      \"description\": \"The combined Activity and Site Location for the main header (e.g., 'Sprinklers - 250 East Carol Way Well').\"\n    },\n    \"purpose_scope\": {\n      \"type\": \"string\",\n      \"description\": \"Relevant job information and purpose statement extracted from the SOP.\"\n    },\n    \"approved_by\": {\n      \"type\": \"string\",\n      \"description\": \"The name next to 'Approved By:' in the SOP. Null if blank or missing.\"\n    },\n    \"preparation_work\": {\n      \"type\": \"string\",\n      \"description\": \"Any pre-work, isolation, or setup text required before tasks begin. Null if none.\"\n    },\n    \"safety_requirements\": {\n      \"type\": \"string\",\n      \"description\": \"PPE, hazards, or safety warnings mentioned in the SOP. Null if none.\"\n    },\n    \"maintenance_tasks\": {\n      \"type\": \"array\",\n      \"description\": \"Chronological procedure steps and section headers for the main table.\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"is_section_header\": {\n            \"type\": \"boolean\",\n            \"description\": \"True if this row is a merged header naming a phase (e.g., 'ON PROCEDURES'). False for standard steps.\"\n          },\n          \"section_name\": {\n            \"type\": \"string\",\n            \"description\": \"The name of the phase/procedure in ALL CAPS if is_section_header is true. Otherwise null.\"\n          },\n          \"order\": {\n            \"type\": \"integer\",\n            \"description\": \"Sequential step number starting from 1 for each phase. Null if is_section_header is true.\"\n          },\n          \"task\": {\n            \"type\": \"string\",\n            \"description\": \"A brief, punchy action phrase consisting of exactly 2 to 4 words. Null if is_section_header is true.\"\n          },\n          \"description\": {\n            \"type\": \"string\",\n            \"description\": \"The rewritten, crystal-clear, direct step instructions. Preserves asset names and image filenames verbatim.\"\n          }\n        },\n        \"required\": [\"is_section_header\", \"section_name\", \"order\", \"task\", \"description\"]\n      }\n    },\n    \"labor_information\": {\n      \"type\": \"array\",\n      \"description\": \"Extracted labor, trades, or contractor requirements.\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"trade_craft\": { \"type\": \"string\" },\n          \"skill_level\": { \"type\": \"string\" },\n          \"number_needed\": { \"type\": \"integer\" },\n          \"estimated_hours\": { \"type\": \"number\" }\n        }\n      }\n    },\n    \"training_requirements\": {\n      \"type\": \"array\",\n      \"description\": \"Specialized training required (safety, technical, etc.).\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"training_name\": { \"type\": \"string\" },\n          \"level\": { \"type\": \"string\" },\n          \"certified\": { \"type\": \"string\" },\n          \"frequency\": { \"type\": \"string\" }\n        }\n      }\n    },\n    \"materials\": {\n      \"type\": \"array\",\n      \"description\": \"Parts, materials, or consumables needed.\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"item_number\": { \"type\": \"string\" },\n          \"quantity\": { \"type\": \"integer\" },\n          \"stock_status\": { \"type\": \"string\", \"description\": \"Stock or Non-Stock\" }\n        }\n      }\n    },\n    \"tools\": {\n      \"type\": \"array\",\n      \"description\": \"Specialized tools and equipment required to perform the task.\",\n      \"items\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"tool_name\": { \"type\": \"string\", \"description\": \"e.g., fork key, compressor adapter\" },\n          \"associated_task_id\": { \"type\": \"string\" },\n          \"quantity\": { \"type\": \"integer\" },\n          \"service_type\": { \"type\": \"string\", \"description\": \"Inside or Outside\" },\n          \"specific_equipment\": { \"type\": \"string\" },\n          \"operator_hours\": { \"type\": \"number\" }\n        }\n      }\n    },\n    \"references\": {\n      \"type\": \"string\",\n      \"description\": \"Any manuals, drawings, or documents referenced by the SOP. Null if none.\"\n    }\n  },\n  \"required\": [\n    \"job_plan_filename\",\n    \"job_plan_id_name\",\n    \"purpose_scope\",\n    \"approved_by\",\n    \"preparation_work\",\n    \"safety_requirements\",\n    \"maintenance_tasks\",\n    \"labor_information\",\n    \"training_requirements\",\n    \"materials\",\n    \"tools\",\n    \"references\"\n  ]\n}"
       },
-      "type": "n8n-nodes-base.extractFromFile",
-      "typeVersion": 1.1,
-      "position": [
-        -304,
-        -160
-      ],
-      "id": "35bf61f3-a919-4b5e-bdc8-782d9f6c9888",
-      "name": "Extract from File"
-    },
-    {
-      "parameters": {},
       "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
       "typeVersion": 1.3,
       "position": [
@@ -79,7 +83,7 @@
     {
       "parameters": {
         "operation": "toText",
-        "sourceProperty": "={{ JSON.stringify($json.output) }}",
+        "sourceProperty": "={{ JSON.stringify($json.response.output) }}",
         "options": {}
       },
       "type": "n8n-nodes-base.convertToFile",
@@ -115,6 +119,69 @@
           "name": "OpenAi account"
         }
       }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Import n8n's native mammoth library to parse docx files\nconst mammoth = require('mammoth');\n\nconst items = this.getInputData();\nconst returnData = [];\n\nfor (let item of items) {\n  // 1. Look for the binary file 'data' coming from Google Cloud Storage\n  const binaryData = item.binary?.data;\n  \n  if (!binaryData) {\n    throw new Error(\"No binary data found under the property 'data'. Check your storage node output.\");\n  }\n\n  // 2. Convert the base64 binary string into a buffer mammoth can read\n  const fileBuffer = Buffer.from(binaryData.data, 'base64');\n\n  // 3. Extract the plain text from the raw Word document structure\n  const result = await mammoth.extractRawText({ buffer: fileBuffer });\n  const textContent = result.value;\n\n  // 4. Push the clean text and file metadata forward to the AI Chain\n  returnData.push({\n    json: {\n      text: textContent,\n      name: binaryData.fileName || \"unknown_sop.docx\"\n    }\n  });\n}\n\nreturn returnData;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -288,
+        -160
+      ],
+      "id": "84988647-ad85-4eb8-b297-19c58eae552d",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "resource": "object",
+        "operation": "create",
+        "createData": {},
+        "createQuery": {},
+        "encryptionHeaders": {},
+        "requestOptions": {}
+      },
+      "type": "n8n-nodes-base.googleCloudStorage",
+      "typeVersion": 1,
+      "position": [
+        496,
+        -16
+      ],
+      "id": "0ffc818b-6dcc-4432-ae10-5260802dec79",
+      "name": "Create an object",
+      "credentials": {
+        "googleCloudStorageOAuth2Api": {
+          "id": "kYyVbgFJl9CiEtAX",
+          "name": "Google Cloud Storage account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        336,
+        192
+      ],
+      "id": "0e1ba68b-1712-4648-a3cf-68e8b34d5385",
+      "name": "Download file",
+      "credentials": {
+        "googleApi": {
+          "id": "pJOmei75GbEQsrj9",
+          "name": "Google Sheets account"
+        }
+      }
     }
   ],
   "connections": {
@@ -127,7 +194,7 @@
       "main": [
         [
           {
-            "node": "Extract from File",
+            "node": "Code in JavaScript",
             "type": "main",
             "index": 0
           }
@@ -156,17 +223,6 @@
         ]
       ]
     },
-    "Extract from File": {
-      "main": [
-        [
-          {
-            "node": "Basic LLM Chain",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "OpenAI Chat Model": {
       "ai_languageModel": [
         [
@@ -188,6 +244,28 @@
           }
         ]
       ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create an object": {
+      "main": [
+        [
+          {
+            "node": "Download file",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -196,11 +274,13 @@
     "availableInMCP": false
   },
   "staticData": null,
-  "meta": null,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
   "pinData": {},
-  "versionId": "7099cea8-3f15-426e-abae-f6e0173d4f02",
+  "versionId": "3847893d-1904-428f-b9bd-b9dd667b833b",
   "activeVersionId": null,
-  "versionCounter": 84,
+  "versionCounter": 119,
   "triggerCount": 0,
   "tags": [],
   "shared": [
