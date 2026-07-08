@@ -1,4 +1,3 @@
-
 services:
   n8n:
     image: n8nio/n8n
@@ -10,6 +9,8 @@ services:
     environment:
       # This is the URL used by n8n to connect to itself for webhooks
       WEBHOOK_URL: http://localhost:5678/
+      # Allows the JavaScript Code node to import the mammoth library
+      NODE_FUNCTION_ALLOW_EXTERNAL: mammoth
     volumes:
       - .:/home/node/.n8n
 
