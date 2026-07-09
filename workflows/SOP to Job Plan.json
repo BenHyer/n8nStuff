@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-08T03:43:22.427Z",
+  "updatedAt": "2026-07-09T02:09:14.141Z",
   "createdAt": "2026-07-06T02:07:18.140Z",
   "id": "vjGuz3Tf0e8F2NPT",
   "name": "SOP to Job Plan",
@@ -7,28 +7,6 @@
   "active": false,
   "isArchived": false,
   "nodes": [
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=Original File Name: {{ $json.name }}\nSOP Text Content: {{ $json.text }}",
-        "messages": {
-          "messageValues": [
-            {
-              "message": "You are an expert technical writer specializing in industrial maintenance and operations training. Your job is to ingest a legacy Standard Operating Procedure (SOP) and completely map its contents into a structured, comprehensive Job Plan JSON object matching all template requirements.  You must respond with a valid raw JSON object ONLY. Do not include markdown code block formatting (like ```json). Just start with { and end with }.  CRITICAL EXTRACTION RULES: 1. Document Identifiers: - \"job_plan_filename\": Calculate using the input document name. Strip out 'SOP' or 'sop'. Keep the leading numeric prefix intact, and insert 'Job Plan' right after the number. (e.g., \"41. Sprinklers...\" becomes \"41. Job Plan Sprinklers...\") - \"job_plan_id_name\": Extract and combine the primary Activity and Site Location (e.g., \"Sprinklers - 250 East Carol Way Well\"). - Ignore legacy headers: Division, Revised by, Effective Date, and Section.  2. Approvals & Scope: - \"approved_by\": Identify the name next to \"Approved By:\". Output null if blank or missing. - \"purpose_scope\": Extract or summarize the purpose/scope of the operation from the SOP text.  3. Administrative Sections (Prep, Safety, References): - Scrutinize the SOP for pre-execution steps, system isolations, or setup steps to populate \"preparation_work\". - Extract any PPE requirements, hazards, or warnings to populate \"safety_requirements\". - Extract any external manuals or documents mentioned to populate \"references\". - If any of these sections are absent in the SOP, set them to null.  4. Maintenance Task Details (The Table Steps): - Break down dense text blocks into individual chronological actions. - Separate Phases: Automatically detect separate execution phases (e.g., \"ON Procedures / OFF Procedures\", \"Spring Start Up / Fall Shut Down\"). Insert an element at the start of that phase where \"is_section_header\" is true, and \"section_name\" holds the phase title in ALL CAPS. - Regular Steps: Set \"is_section_header\" to false. Restart the \"order\" count at 1 for each new phase. - \"task\": Create a punchy action phrase consisting of exactly 2 to 4 words. - \"description\": Write simple, linear instructions for a brand-new employee. Keep asset parameters verbatim (brands, sizes, unique tools like \"fork key\"). Retain image file name references verbatim.  5. Resources Tables (Labor, Training, Materials, Tools): - Extract any mentions of required crew sizes, trades, or estimated times into the \"labor_information\" array. - Extract specialized certifications or safety training mentioned into \"training_requirements\". - Extract required replacement parts or consumables into \"materials\". - Extract required specialized gear (e.g., \"compressor adapter\", \"fork key\") into the \"tools\" array. - If no data exists for a resources table, return an empty array [].  OUTPUT SCHEMA: Return data matching this key layout: {   \"job_plan_filename\": \"string\",   \"job_plan_id_name\": \"string\",   \"purpose_scope\": \"string\",   \"approved_by\": \"string or null\",   \"preparation_work\": \"string or null\",   \"safety_requirements\": \"string or null\",   \"maintenance_tasks\": [     { \"is_section_header\": boolean, \"section_name\": \"string or null\", \"order\": integer or null, \"task\": \"string or null\", \"description\": \"string\" }   ],   \"labor_information\": [],   \"training_requirements\": [],   \"materials\": [],   \"tools\": [],   \"references\": \"string or null\" }\n"
-            }
-          ]
-        },
-        "batching": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "typeVersion": 1.9,
-      "position": [
-        -704,
-        96
-      ],
-      "id": "5a016217-97ab-452a-b3b6-418b5ac2a1a6",
-      "name": "Basic LLM Chain"
-    },
     {
       "parameters": {},
       "type": "n8n-nodes-base.manualTrigger",
@@ -54,35 +32,6 @@
       ],
       "id": "bd97a0a8-8f7a-42fb-949f-066e2086d86d",
       "name": "Convert to File"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "deepseek-ai/deepseek-v4-pro",
-          "mode": "list",
-          "cachedResultName": "deepseek-ai/deepseek-v4-pro"
-        },
-        "builtInTools": {},
-        "options": {
-          "maxTokens": 16384,
-          "maxRetries": 2
-        }
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.3,
-      "position": [
-        -704,
-        272
-      ],
-      "id": "198ba7ff-091a-4def-874f-692b1eaf3c4e",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "LmYJtCROqZil0L6l",
-          "name": "OpenAi account"
-        }
-      }
     },
     {
       "parameters": {
@@ -158,7 +107,7 @@
     },
     {
       "parameters": {
-        "jsCode": "return [{ json: JSON.parse($input.first().json.text) }];"
+        "jsCode": "return [{ json: JSON.parse($input.first().json.choices[0].message.content) }];"
       },
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
@@ -168,6 +117,33 @@
       ],
       "id": "813b7d75-952e-40e3-9e9e-d9e481aa11b3",
       "name": "Code in JavaScript1"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://integrate.api.nvidia.com/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer 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"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "{\n  \"model\": \"deepseek-ai/deepseek-v4-pro\",\n  \"messages\": [\n    {\n      \"role\": \"system\",\n      \"content\": \"You are an expert technical writer specializing in industrial maintenance and operations training. Your job is to ingest a legacy Standard Operating Procedure (SOP) and completely map its contents into a structured, comprehensive Job Plan JSON object matching all template requirements. You must respond with a valid raw JSON object ONLY. Do not include markdown code block formatting.\"\n    },\n    {\n      \"role\": \"user\",\n      \"content\": \"File Name: {{ $json.name }}\\n\\nSOP Content:\\n{{ $json.text }}\"\n    }\n  ]\n}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [
+        -624,
+        96
+      ],
+      "id": "fd12f533-c019-4465-a954-41bc995af4b2",
+      "name": "HTTP Request"
     }
   ],
   "connections": {
@@ -193,33 +169,11 @@
         ]
       ]
     },
-    "Basic LLM Chain": {
-      "main": [
-        [
-          {
-            "node": "Code in JavaScript1",
-            "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Basic LLM Chain",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
-      ]
-    },
     "Code in JavaScript": {
       "main": [
         [
           {
-            "node": "Basic LLM Chain",
+            "node": "HTTP Request",
             "type": "main",
             "index": 0
           }
@@ -247,6 +201,17 @@
           }
         ]
       ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
   "settings": {
@@ -259,9 +224,9 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "4bdceb2f-b33e-4372-a704-98253806708d",
+  "versionId": "db7baae8-1292-4846-97d7-370c8e82fff5",
   "activeVersionId": null,
-  "versionCounter": 242,
+  "versionCounter": 280,
   "triggerCount": 0,
   "tags": [],
   "shared": [
