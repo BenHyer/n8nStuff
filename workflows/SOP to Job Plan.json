@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-07-09T02:09:14.141Z",
+  "updatedAt": "2026-07-14T02:31:52.580Z",
   "createdAt": "2026-07-06T02:07:18.140Z",
   "id": "vjGuz3Tf0e8F2NPT",
   "name": "SOP to Job Plan",
@@ -12,8 +12,8 @@
       "type": "n8n-nodes-base.manualTrigger",
       "typeVersion": 1,
       "position": [
-        -672,
-        -160
+        -816,
+        -224
       ],
       "id": "fc3d6049-2224-4cac-9c6a-1e9558efcd97",
       "name": "When clicking ‘Execute workflow’"
@@ -27,8 +27,8 @@
       "type": "n8n-nodes-base.convertToFile",
       "typeVersion": 1.1,
       "position": [
-        -176,
-        96
+        -240,
+        80
       ],
       "id": "bd97a0a8-8f7a-42fb-949f-066e2086d86d",
       "name": "Convert to File"
@@ -40,8 +40,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -288,
-        -160
+        -320,
+        -224
       ],
       "id": "84988647-ad85-4eb8-b297-19c58eae552d",
       "name": "Code in JavaScript"
@@ -61,8 +61,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        -480,
-        -160
+        -576,
+        -224
       ],
       "id": "591956fe-7826-4707-95df-aeab8184575c",
       "name": "Download file",
@@ -93,8 +93,8 @@
       "type": "n8n-nodes-base.googleDrive",
       "typeVersion": 3,
       "position": [
-        0,
-        96
+        16,
+        80
       ],
       "id": "aca0046e-0c0c-4890-b80f-b6a4efa81870",
       "name": "Upload file",
@@ -112,8 +112,8 @@
       "type": "n8n-nodes-base.code",
       "typeVersion": 2,
       "position": [
-        -352,
-        96
+        -512,
+        80
       ],
       "id": "813b7d75-952e-40e3-9e9e-d9e481aa11b3",
       "name": "Code in JavaScript1"
@@ -139,8 +139,8 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.4,
       "position": [
-        -624,
-        96
+        -800,
+        80
       ],
       "id": "fd12f533-c019-4465-a954-41bc995af4b2",
       "name": "HTTP Request"
@@ -224,9 +224,9 @@
     "templateCredsSetupCompleted": true
   },
   "pinData": {},
-  "versionId": "db7baae8-1292-4846-97d7-370c8e82fff5",
+  "versionId": "e9b58d39-9ded-487d-af1d-b558d46e6806",
   "activeVersionId": null,
-  "versionCounter": 280,
+  "versionCounter": 286,
   "triggerCount": 0,
   "tags": [],
   "shared": [
